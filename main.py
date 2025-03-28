@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routes import home  # Solo si ejecutas uvicorn con `PYTHONPATH`
+from routes import home  # Solo si ejecutas uvicorn con `PYTHONPATH`
 
 
 import uvicorn

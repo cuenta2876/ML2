@@ -1,15 +1,17 @@
-import os
 from fastapi import FastAPI
+import os
 import uvicorn
 import psycopg2
 
 app = FastAPI()
 
+# Obtener la URL de la base de datos desde las variables de entorno
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+# Conexión a PostgreSQL
 def test_db_connection():
     try:
-        conn = psycopg2.connect(DATABASE_URL)
+        conn = psycopg2.connect(DATABASE_URL, sslmode="require")  # Usa conexión segura
         cur = conn.cursor()
         cur.execute("SELECT 1")
         cur.close()
@@ -31,5 +33,5 @@ def test_db():
         return {"status": "error", "message": result}
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 10000))  # Render asigna un puerto dinámico
+    port = int(os.getenv("PORT", 8000))  # Render usa la variable de entorno PORT
     uvicorn.run(app, host="0.0.0.0", port=port)
